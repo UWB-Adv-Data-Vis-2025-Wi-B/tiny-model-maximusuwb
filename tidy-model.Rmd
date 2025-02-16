@@ -64,4 +64,28 @@ summary.lm(species_lm)
 ```
 From the graph, we can see that as temperature increases, the chirping rate also increases for both species. However, there is a noticeable difference between the two species—O. exclamationis tends to chirp at a higher rate compared to O. niveus, even at the same temperature.
 
+## Interactions
+
+```{r species historgram, echo = FALSE}
+ggplot(crickets, aes(x = rate, fill = species)) +
+  geom_histogram(position = 'identity', alpha = 0.7, bins = 8) + 
+  ggtitle("Distribution of the chirp rate of crickets") +
+  xlab('Chirp rate (per min.)')
+```
+
+```{r interactions, echo= FALSE}
+ggplot(crickets, aes(x = temp, y = rate, color = species)) +
+  geom_point() + 
+  geom_smooth(method = 'lm') +
+  ggtitle("Plot of temperature and chirp rate for two species of crickets") +
+  ylab('Chirp rate (per min.)') +
+  xlab('Temperature (Celsius)')
+  
+species_x_temp_lm <- lm(rate ~ temp + species + temp:species, crickets) 
+summary.lm(species_x_temp_lm)
+
+anova(species_lm, species_x_temp_lm)
+```
+
+
 
