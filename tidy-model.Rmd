@@ -87,5 +87,38 @@ summary.lm(species_x_temp_lm)
 anova(species_lm, species_x_temp_lm)
 ```
 
+##Visualize and model diamond prices
+
+```{r loadDiamonds, include = FALSE}
+data(diamonds, package = "ggplot2")
+
+summary(diamonds)
+```
+
+```{r Diamonds, echo=FALSE}
+set.seed(123)  # Ensures reproducibility
+diamond_sample <- diamonds[sample(nrow(diamonds), 5000), ]  # Randomly sample 5000 points
+
+ggplot(diamond_sample, aes(x = carat, y = price, color = cut)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  labs(title = "Effect of Carat & Cut on Diamond Price (Sampled Data)",
+       x = "Carat",
+       y = "Price")
+
+diamond_lm <- lm(price ~ carat + cut + clarity, data = diamonds)
+summary(diamond_lm)
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
